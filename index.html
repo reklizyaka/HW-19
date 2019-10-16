@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+					
+			body{
+				list-style: none;
+				text-decoration: none;
+				padding: 0;
+				margin: 0;
+				font: 1em/1.4em sans-serif;
+			}
+			
+			ul{
+				width: 200px;
+				margin: 20px;
+			}
+			
+			ul ul{
+				position: absolute;
+				width: 100%;
+				top: 0;
+				left: 70%;
+				transition: 0.5s opacity;
+				display: none;
+			}
+		
+			ul li {
+				position: relative;
+			}	
+			
+			.menu__list ul{
+				display: block;
+			}
+			
+			ul li {
+				background: #3d3d3d;
+				color: #fff;
+				padding: 10px;
+				display: block;
+				transition: 0.5s all;
+			}
+		
+			ul li:hover {
+				background: #666;
+				padding: 10px 0 10px 20px;
+			}  
+
+			.menu__list:hover {
+				opacity: 1;
+				top: 0;
+			}
+
+
+		</style>
+</head>
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			const nav = [
+				{listText: 'Action'},
+				{listText: 'Another action 2'},
+				{
+					listText: 'Submenu',
+					submenu: [
+						{listText: 'Submenu action'},
+						{listText: 'Another submenu action'},
+						{listText: 'Subsubmenu'}
+					]
+				},
+				{
+					listText: 'Submenu 2',
+					submenu: [
+						{listText: 'Submenu action'},
+						{listText: 'Another submenu action'},
+						{listText: 'Subsubmenu'}
+					]
+				}
+			];
+
+			const navBuild = data => {
+				const $ul = $('<ul>');
+				
+				$(data).each((index, item) => {
+					const $li = $('<li>').text(item.listText);
+					$li.innerText = item.listText;
+					
+					if(item.submenu) {
+						const $subMenu = navBuild(item.submenu);
+						$($subMenu).addClass('menu__list').appendTo($li);
+					}
+						$($li).appendTo($ul)
+				})
+				return $ul;
+			}
+			const $menu = navBuild(nav);
+			$(($menu).appendTo('body'));
+			$('li').hover(function() {
+				$(this).toggleClass('menu__list')
+			}, function() {
+				$(this).toggleClass('menu__list')
+			})
+			
+			
+		</script>
+</body>
+</html>
